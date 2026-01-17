@@ -1,34 +1,22 @@
 const asyncHandler = require('express-async-handler');
-const Book = require('../models/Book');
+const bookService = require('../services/bookService');
 
-// @desc    Fetch all books
-// @route   GET /api/books
-// @access  Public
+
 const getBooks = asyncHandler(async (req, res) => {
-  const keyword = req.query.keyword
-    ? {
-        title: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
-    : {};
-
-  const books = await Book.find({ ...keyword });
+  const books = await bookService.getBooks(req.query.keyword);
   res.json(books);
 });
 
-// @desc    Fetch single book
-// @route   GET /api/books/:id
-// @access  Public
-const getBookById = asyncHandler(async (req, res) => {
-  const book = await Book.findById(req.params.id);
 
-  if (book) {
+const getBookById = asyncHandler(async (req, res) => {
+  try {
+    const book = await bookService.getBookById(req.params.id);
     res.json(book);
-  } else {
-    res.status(404);
-    throw new Error('Book not found');
+  } catch (error) {
+    if (error.message === 'Book not found') {
+      res.status(404);
+    }
+    throw error;
   }
 });
 
