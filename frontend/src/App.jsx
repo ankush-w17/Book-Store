@@ -25,7 +25,7 @@ function App() {
         <CartProvider>
             <Router>
               <div className="min-h-screen bg-white flex flex-col">
-                <Toaster position="top-right" reverseOrder={false} />
+                <Toaster position="top-center" reverseOrder={false} />
                 <Navbar />
                 <main className="flex-grow">
                     <Routes>
