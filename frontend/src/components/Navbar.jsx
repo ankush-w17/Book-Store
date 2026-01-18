@@ -46,14 +46,24 @@ const Navbar = () => {
         <div className="flex items-center gap-8 border-l border-white/20 pl-8 h-8">
            {user ? (
              <div className="flex items-center gap-4">
-                 <div className="flex flex-col items-center">
-                    <User className="h-5 w-5" />
-                    <span className="text-[10px] font-medium">{user.name.split(' ')[0]}</span>
+                 <div className="relative group/profile py-2">
+                    <Link to="/profile" className="flex flex-col items-center cursor-pointer">
+                        <User className="h-5 w-5" />
+                        <span className="text-[10px] font-medium">{user.name.split(' ')[0]}</span>
+                    </Link>
+                    
+                    {/* Hover Dropdown */}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-sm border border-gray-100 min-w-[150px] hidden group-hover/profile:block z-50">
+                        <div className="py-1">
+                             <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 font-medium">Profile</Link>
+                             <Link to="/my-orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 font-medium">My Orders</Link>
+                             <Link to="/wishlist" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 font-medium">My Wishlist</Link>
+                             <button onClick={logout} className="w-full text-left px-4 py-2 text-sm text-[#A03037] hover:bg-gray-50 font-medium border-t border-gray-100 flex items-center gap-2">
+                                <LogOut className="h-3 w-3" /> Logout
+                             </button>
+                        </div>
+                    </div>
                  </div>
-                 <button onClick={logout} className="flex flex-col items-center cursor-pointer hover:opacity-90 transition-opacity gap-0.5 bg-transparent border-0 p-0">
-                    <LogOut className="h-5 w-5" />
-                    <span className="text-[10px] font-medium">Logout</span>
-                 </button>
              </div>
            ) : (
              <Link to="/login" className="flex flex-col items-center cursor-pointer hover:opacity-90 transition-opacity gap-0.5">

@@ -38,13 +38,20 @@ export const AuthProvider = ({ children }) => {
       return data;
   };
 
+  const updateProfile = async (userData) => {
+      const { data } = await api.put('/auth/profile', userData);
+      localStorage.setItem('user', JSON.stringify(data));
+      setUser(data);
+      return data;
+  };
+
   const logout = () => {
     localStorage.removeItem('user');
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, googleLogin, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, googleLogin, updateProfile, logout, loading }}>
         {!loading && children}
     </AuthContext.Provider>
   );

@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import BookDetails from './pages/BookDetails';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import Profile from './pages/Profile';
 
 function App() {
   const GOOGLE_CLIENT_ID = "56083661044-8sh463drmbd8q10e6m6ltakg77f7q696.apps.googleusercontent.com";
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/book/:id" element={<BookDetails />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/profile" element={<Profile />} />
                     </Routes>
                 </main>
                 <footer className="bg-[#2E1D1E] text-white py-5 text-center text-xs">
