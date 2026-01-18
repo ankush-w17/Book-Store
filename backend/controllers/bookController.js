@@ -3,8 +3,9 @@ const bookService = require('../services/bookService');
 
 
 const getBooks = asyncHandler(async (req, res) => {
-  const books = await bookService.getBooks(req.query.keyword);
-  res.json(books);
+  const { keyword, page, limit, sort } = req.query;
+  const data = await bookService.getBooks(keyword, Number(page) || 1, Number(limit) || 25, sort);
+  res.json(data);
 });
 
 
