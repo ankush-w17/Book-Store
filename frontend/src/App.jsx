@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import Wishlist from './pages/Wishlist';
 import MyOrders from './pages/MyOrders';
 import OrderSuccess from './pages/OrderSuccess';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   const GOOGLE_CLIENT_ID = "56083661044-8sh463drmbd8q10e6m6ltakg77f7q696.apps.googleusercontent.com";
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/wishlist" element={<Wishlist />} />
                     <Route path="/my-orders" element={<MyOrders />} />
                     <Route path="/order-success" element={<OrderSuccess />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
                     </Routes>
                 </main>
                 <footer className="bg-[#2E1D1E] text-white py-5 text-center text-xs">

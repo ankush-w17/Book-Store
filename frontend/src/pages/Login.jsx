@@ -60,7 +60,7 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
-                         <Link to="#" className="text-[10px] text-right text-gray-500 hover:text-[#A03037]">Forgot Password?</Link>
+                         <Link to="/forgot-password" className="text-[10px] text-right text-gray-500 hover:text-[#A03037]">Forgot Password?</Link>
                     </div>
                     
                     <button type="submit" className="bg-[#A03037] text-white py-2 rounded font-bold text-sm hover:bg-[#8B292F] transition-colors mt-2">
