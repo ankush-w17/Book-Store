@@ -34,6 +34,9 @@ const registerUser = async (userData) => {
   }
 };
 
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 const loginUser = async (loginData) => {
   const { email, password } = loginData;
 
@@ -51,7 +54,41 @@ const loginUser = async (loginData) => {
   }
 };
 
+const googleLogin = async (idToken) => {
+  const ticket = await client.verifyIdToken({
+    idToken,
+    audience: process.env.GOOGLE_CLIENT_ID,
+  });
+  const { name, email, sub } = ticket.getPayload();
+
+  let user = await User.findOne({ email });
+
+  if (user) {
+    if (!user.googleId) {
+      user.googleId = sub;
+      await user.save();
+    }
+  } else {
+    // Generate a random password for Google users as one is required by schema/hashing but they won't use it
+    const randomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+    user = await User.create({
+      name,
+      email,
+      password: randomPassword, 
+      googleId: sub,
+    });
+  }
+
+  return {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    token: generateToken(user._id),
+  };
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  googleLogin,
 };

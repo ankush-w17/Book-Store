@@ -26,4 +26,15 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser };
+const googleAuth = asyncHandler(async (req, res) => {
+  try {
+    const { token } = req.body;
+    const userData = await authService.googleLogin(token);
+    res.json(userData);
+  } catch (error) {
+    res.status(401);
+    throw new Error('Google authentication failed: ' + error.message);
+  }
+});
+
+module.exports = { registerUser, authUser, googleAuth };
