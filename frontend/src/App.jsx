@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import { AuthProvider } from './context/AuthContext';
@@ -24,6 +25,7 @@ function App() {
         <CartProvider>
             <Router>
               <div className="min-h-screen bg-white flex flex-col">
+                <Toaster position="top-right" reverseOrder={false} />
                 <Navbar />
                 <main className="flex-grow">
                     <Routes>

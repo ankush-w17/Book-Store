@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Star, Heart } from 'lucide-react';
 import api from '../utils/api';
+import toast from 'react-hot-toast';
 
 const BookCard = ({ book }) => {
   const navigate = useNavigate();
@@ -14,19 +15,12 @@ const BookCard = ({ book }) => {
           className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 hover:bg-white text-gray-400 hover:text-[#A03037] shadow-sm z-10 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={async (e) => {
               e.stopPropagation();
-              // Assuming we have access to user context or simple error handling
-              // Since BookCard is unused in a context provider, we might need to import api directly
-              // But for better UX, we'd want auth check. For now, simple API call.
               try {
-                // If using context is hard here without refactoring parent, we import api directly
-                // We really should use useAuth but hook rules apply. 
-                // Let's assume we can try catch and if 401, redirect or alert.
-                // Best practice: Pass addToWishlist as prop or use hook in component
                 await api.post('/wishlist', { bookId: book._id });
-                alert("Added to Wishlist");
+                toast.success("Added to Wishlist");
               } catch (err) {
                  if(err.response?.status === 401) window.location.href = '/login';
-                 else alert("Failed to add to wishlist");
+                 else toast.error(err.response?.data?.message || "Failed to add to wishlist");
               }
           }}
       >
