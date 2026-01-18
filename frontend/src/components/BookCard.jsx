@@ -1,9 +1,14 @@
-import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 
 const BookCard = ({ book }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-white border border-gray-200 rounded-[3px] p-5 flex flex-col hover:shadow-md transition-shadow cursor-pointer relative group">
+    <div 
+        onClick={() => navigate(`/book/${book._id}`)}
+        className="bg-white border border-gray-200 rounded-[3px] p-5 flex flex-col hover:shadow-md transition-shadow cursor-pointer relative group"
+    >
       <div className="bg-[#F5F5F5] h-[160px] w-full flex items-center justify-center mb-4 rounded-sm overflow-hidden px-4 py-2">
          {book.image ? (
             <img src={book.image} alt={book.title} className="h-full object-contain shadow-sm" />
@@ -18,9 +23,9 @@ const BookCard = ({ book }) => {
         
         <div className="flex items-center gap-1.5">
             <div className="bg-[#388E3C] text-white text-[11px] font-bold px-1.5 py-[1px] rounded-[2px] flex items-center gap-0.5">
-                {book.rating} <Star className="h-2 w-2 fill-current" />
+                {book.averageRating || 0} <Star className="h-2 w-2 fill-current" />
             </div>
-            <span className="text-[#878787] text-[12px]">({book.ratingCount})</span>
+            <span className="text-[#878787] text-[12px]">({book.quantity})</span>
         </div>
 
         <div className="flex items-center gap-2 mt-1">

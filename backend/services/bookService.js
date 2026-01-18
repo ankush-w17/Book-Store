@@ -10,7 +10,7 @@ const getBooks = async (keyword) => {
       }
     : {};
 
-  const books = await Book.find({ ...query });
+  const books = await Book.find({ ...query }).limit(25);
   return books;
 };
 

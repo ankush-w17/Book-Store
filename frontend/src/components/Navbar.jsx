@@ -62,7 +62,7 @@ const Navbar = () => {
              </Link>
            )}
           
-          <div className="flex flex-col items-center cursor-pointer hover:opacity-90 transition-opacity gap-0.5 relative">
+          <Link to="/cart" className="flex flex-col items-center cursor-pointer hover:opacity-90 transition-opacity gap-0.5 relative">
              <div className="relaitve">
                 <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
@@ -72,7 +72,7 @@ const Navbar = () => {
                 )}
              </div>
             <span className="text-[10px] font-medium">Cart</span>
-          </div>
+          </Link>
         </div>
       </div>
     </nav>
