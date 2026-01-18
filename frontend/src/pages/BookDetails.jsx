@@ -4,6 +4,7 @@ import { Star, Heart } from 'lucide-react';
 import api from '../utils/api';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import toast from 'react-hot-toast';
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -42,6 +43,7 @@ const BookDetails = () => {
           return;
       }
       await addToCart(book._id);
+      toast.success("Added to Bag");
   };
 
   const handleSubmitReview = async () => {
@@ -60,8 +62,9 @@ const BookDetails = () => {
           setReviews(data);
           setComment('');
           setUserRating(0);
+          toast.success("Review submitted");
       } catch (error) {
-          alert('Failed to submit review');
+          toast.error('Failed to submit review');
       }
   };
 
@@ -179,9 +182,9 @@ const BookDetails = () => {
                             }
                             try {
                                 await api.post('/wishlist', { bookId: book._id });
-                                alert("Added to Wishlist");
+                                toast.success("Added to Wishlist");
                             } catch (error) {
-                                alert("Failed to add to wishlist");
+                                toast.error("Failed to add to wishlist");
                             }
                         }}
                         className="bg-[#333333] text-white px-8 py-2 rounded-[2px] font-medium text-sm flex-1 max-w-[150px] flex items-center justify-center gap-2 hover:bg-black uppercase"

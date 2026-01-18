@@ -57,15 +57,8 @@ const placeOrder = async (userId, address) => {
 };
 
 const getUserOrders = async (userId) => {
-  try {
-      console.log("Fetching orders for user:", userId);
-      const orders = await Order.find({ userId }).populate('items.bookId').sort({ createdAt: -1 });
-      console.log("Found orders count:", orders ? orders.length : 0);
-      return orders;
-  } catch (error) {
-      console.error("Critical Error in getUserOrders:", error);
-      throw error;
-  }
+  const orders = await Order.find({ userId }).populate('items.bookId').sort({ createdAt: -1 });
+  return orders;
 };
 
 module.exports = {
