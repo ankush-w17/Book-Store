@@ -32,11 +32,15 @@ const MyOrders = () => {
                  order.items.map((item, index) => (
                     <div key={`${order._id}-${index}`} className="border border-[#E4E4E4] p-6 flex gap-6 items-start bg-white rounded-[1px]">
                          <div className="w-[80px] h-[100px] flex-shrink-0">
-                                 <img src={item.bookId.image} alt={item.bookId.title} className="w-full h-full object-contain" />
+                                 {item.bookId ? (
+                                    <img src={item.bookId.image} alt={item.bookId.title} className="w-full h-full object-contain" />
+                                 ) : (
+                                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-400">N/A</div>
+                                 )}
                          </div>
                          <div className="flex-1">
-                             <h2 className="text-lg font-medium text-[#0A0102] mb-1">{item.bookId.title}</h2>
-                             <p className="text-xs text-[#9D9D9D] mb-4">by {item.bookId.author}</p>
+                             <h2 className="text-lg font-medium text-[#0A0102] mb-1">{item.bookId ? item.bookId.title : 'Book Unavailable'}</h2>
+                             <p className="text-xs text-[#9D9D9D] mb-4">by {item.bookId ? item.bookId.author : 'Unknown'}</p>
                              <div className="flex items-center gap-2 mb-2">
                                 <span className="font-bold text-[#0A0102] text-sm">
                                     Rs. {item.price}
