@@ -12,7 +12,8 @@ const Wishlist = () => {
     const fetchWishlist = async () => {
         try {
             const { data } = await api.get('/wishlist');
-            setWishlistItems(data.items || []);
+            const validItems = (data.items || []).filter(item => item.bookId);
+            setWishlistItems(validItems);
         } catch (error) {
             console.error("Failed to fetch wishlist");
         }
@@ -40,7 +41,7 @@ const Wishlist = () => {
              
              <div className="bg-white">
                  {wishlistItems.map(item => (
-                     <div key={item.bookId._id} className="flex justify-between items-start p-6 border-b border-[#E4E4E4] last:border-0 hover:shadow-sm transition-shadow">
+                     <div key={item._id} className="flex justify-between items-start p-6 border-b border-[#E4E4E4] last:border-0 hover:shadow-sm transition-shadow">
                          <div className="flex gap-6">
                              <div className="w-[80px] h-[100px] flex-shrink-0">
                                  <img src={item.bookId.image} alt={item.bookId.title} className="w-full h-full object-contain" />
