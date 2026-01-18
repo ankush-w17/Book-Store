@@ -19,8 +19,9 @@ export const CartProvider = ({ children }) => {
       }
       try {
           const { data } = await api.get('/cart');
-          setCartItems(data.items);
-          const count = data.items.reduce((acc, item) => acc + item.quantity, 0);
+          const items = data?.items || [];
+          setCartItems(items);
+          const count = items.reduce((acc, item) => acc + item.quantity, 0);
           setCartCount(count);
       } catch (error) {
           console.error("Failed to fetch cart", error);

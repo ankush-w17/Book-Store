@@ -28,6 +28,7 @@ const Cart = () => {
                         <h2 className="text-lg font-medium text-[#0A0102]">My Cart ({cartItems.length})</h2>
                     </div>
                     {cartItems.map(item => (
+                        item.bookId && (
                         <div key={item.bookId._id} className="flex gap-6 p-6 border-t border-[#E4E4E4]">
                              <div className="w-[80px] h-[100px] flex-shrink-0">
                                  <img src={item.bookId.image} alt={item.bookId.title} className="w-full h-full object-contain" />
@@ -47,18 +48,19 @@ const Cart = () => {
                                  
                                  <div className="flex items-center gap-4">
                                      <div className="flex items-center gap-2">
-                                         <button className="w-6 h-6 rounded-full border border-[#DBDBDB] flex items-center justify-center text-[#DBDBDB] hover:border-black hover:text-black">-</button>
+                                         <button className="w-6 h-6 rounded-full border border-[#DBDBDB] flex items-center justify-center text-[#DBDBDB] hover:border-black hover:text-black" onClick={() => addToCart(item.bookId._id, -1)}>-</button>
                                          <span className="border border-[#DBDBDB] w-10 h-6 flex items-center justify-center text-sm">{item.quantity}</span>
-                                          <button className="w-6 h-6 rounded-full border border-[#DBDBDB] flex items-center justify-center text-[#DBDBDB] hover:border-black hover:text-black">+</button>
+                                          <button className="w-6 h-6 rounded-full border border-[#DBDBDB] flex items-center justify-center text-[#DBDBDB] hover:border-black hover:text-black" onClick={() => addToCart(item.bookId._id, 1)}>+</button>
                                      </div>
                                      <button className="text-sm font-medium text-[#0A0102] hover:text-[#A03037]" onClick={() => removeFromCart(item.bookId._id)}>Remove</button>
                                  </div>
                              </div>
                         </div>
+                        )
                     ))}
                     {cartItems.length === 0 && <div className="p-6 text-center text-gray-500">Your cart is empty.</div>}
                     <div className="bg-white p-6 flex justify-end">
-                        {cartItems.length > 0 && (
+                        {cartItems.length > 0 && cartItems.some(i => i.bookId) && (
                              <button className="bg-[#3371B5] text-white px-8 py-2 rounded-[2px] font-medium text-sm w-[150px] uppercase" onClick={() => navigate('/checkout')}>Place Order</button>
                         )}
                     </div>
