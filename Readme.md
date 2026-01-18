@@ -44,7 +44,7 @@ Create a `.env` file in the `backend` folder:
 
 ```
 URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=your_secret
 GOOGLE_CLIENT_ID=your_google_client_id
 PORT=5000
 ```
