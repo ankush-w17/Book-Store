@@ -37,4 +37,9 @@ const googleAuth = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser, googleAuth };
+const updateUserProfile = asyncHandler(async (req, res) => {
+    const user = await authService.updateUserProfile(req.user._id, req.body);
+    res.json(user);
+});
+
+module.exports = { registerUser, authUser, googleAuth, updateUserProfile };

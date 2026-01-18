@@ -87,8 +87,33 @@ const googleLogin = async (idToken) => {
   };
 };
 
+const updateUserProfile = async (userId, updateData) => {
+    const user = await User.findById(userId);
+    if (user) {
+        user.name = updateData.name || user.name;
+        user.email = updateData.email || user.email;
+        user.mobile = updateData.mobile !== undefined ? updateData.mobile : user.mobile;
+        
+        if (updateData.password) {
+            user.password = updateData.password;
+        }
+
+        const updatedUser = await user.save();
+        return {
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            token: generateToken(updatedUser._id),
+            mobile: updatedUser.mobile
+        };
+    } else {
+        throw new Error('User not found');
+    }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   googleLogin,
+  updateUserProfile
 };
