@@ -26,9 +26,7 @@ const Checkout = () => {
             await api.post('/orders', { address });
             // Refresh cart context (should be empty now)
             await fetchCart();
-            // Show success message or redirect
-            alert('Order placed successfully!');
-            navigate('/');
+            navigate('/order-success');
         } catch (error) {
             alert(error.response?.data?.message || 'Order failed');
         } finally {
