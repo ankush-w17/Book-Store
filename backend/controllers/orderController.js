@@ -15,4 +15,9 @@ const placeOrder = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { placeOrder };
+const getOrders = asyncHandler(async (req, res) => {
+  const orders = await orderService.getUserOrders(req.user._id);
+  res.json(orders);
+});
+
+module.exports = { placeOrder, getOrders };
