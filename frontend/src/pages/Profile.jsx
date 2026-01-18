@@ -24,7 +24,8 @@ const Profile = () => {
       street: '',
       city: '',
       state: '',
-      pincode: ''
+      pincode: '',
+      type: 'Home'
   });
 
   useEffect(() => {
@@ -79,7 +80,8 @@ const Profile = () => {
           street: addr.street,
           city: addr.city,
           state: addr.state,
-          pincode: addr.pincode
+          pincode: addr.pincode,
+          type: addr.type || 'Home'
       });
       setEditingAddress(addr);
       setShowAddressForm(true);
@@ -243,6 +245,46 @@ const Profile = () => {
                                 />
                              </div>
                          </div>
+                         
+                         <div className="col-span-2">
+                            <label className="block text-xs font-medium text-[#0A0102] mb-2">Type</label>
+                            <div className="flex gap-6">
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input 
+                                        type="radio" 
+                                        name="addressType" 
+                                        value="Home"
+                                        checked={addressData.type === 'Home' || !addressData.type}
+                                        onChange={(e) => setAddressData({...addressData, type: e.target.value})}
+                                        className="accent-[#A03037]"
+                                    />
+                                    <span className="text-sm text-[#0A0102]">Home</span>
+                                </label>
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input 
+                                        type="radio" 
+                                        name="addressType" 
+                                        value="Work"
+                                        checked={addressData.type === 'Work'}
+                                        onChange={(e) => setAddressData({...addressData, type: e.target.value})}
+                                        className="accent-[#A03037]"
+                                    />
+                                    <span className="text-sm text-[#0A0102]">Work</span>
+                                </label>
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input 
+                                        type="radio" 
+                                        name="addressType" 
+                                        value="Other"
+                                        checked={addressData.type === 'Other'}
+                                        onChange={(e) => setAddressData({...addressData, type: e.target.value})}
+                                        className="accent-[#A03037]"
+                                    />
+                                    <span className="text-sm text-[#0A0102]">Other</span>
+                                </label>
+                            </div>
+                         </div>
+
                         <button type="submit" className="bg-[#3371B5] text-white py-2 px-6 text-sm rounded-[2px] w-fit mt-2">
                              {editingAddress ? 'Update Address' : 'Add Address'}
                         </button>
@@ -252,10 +294,13 @@ const Profile = () => {
                         {addresses.map((addr, index) => (
                              <div key={addr._id} className="border border-[#E4E4E4] p-4 rounded-[1px] relative">
                                  <div className="flex justify-between items-start mb-2">
-                                     <h3 className="text-sm font-medium">
-                                         {index + 1}.Work <span className="text-xs font-normal text-gray-500 hidden">(Type not stored)</span>
+                                     <h3 className="text-sm font-medium flex items-center gap-2">
+                                         {index + 1}. {addr.type || 'Home'}
                                      </h3>
-                                     <button onClick={() => handleEditAddress(addr)} className="text-[#A03037] text-xs font-medium">Edit</button>
+                                     <div className="flex gap-3">
+                                        <button onClick={() => handleEditAddress(addr)} className="text-[#A03037] text-xs font-medium">Edit</button>
+                                        <button onClick={() => handleDeleteAddress(addr._id)} className="text-[#A03037] text-xs font-medium">Delete</button>
+                                     </div>
                                  </div>
                                  <p className="text-xs text-[#0A0102] leading-relaxed mb-4">
                                      {addr.name} <br/>
@@ -263,7 +308,6 @@ const Profile = () => {
                                      {addr.state} - {addr.pincode} <br/>
                                      {addr.phone}
                                  </p>
-                                 {/* Assuming radio select functionality might be needed for Checkout, but here just display logic? User didn't ask for selection in Profile */}
                              </div>
                         ))}
                         {addresses.length === 0 && <p className="text-sm text-gray-500">No addresses found.</p>}

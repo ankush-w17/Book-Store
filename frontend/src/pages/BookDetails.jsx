@@ -171,7 +171,21 @@ const BookDetails = () => {
                     >
                         Add to Bag
                     </button>
-                    <button className="bg-[#333333] text-white px-8 py-2 rounded-[2px] font-medium text-sm flex-1 max-w-[150px] flex items-center justify-center gap-2 hover:bg-black uppercase">
+                    <button 
+                        onClick={async () => {
+                            if (!user) {
+                                navigate('/login');
+                                return;
+                            }
+                            try {
+                                await api.post('/wishlist', { bookId: book._id });
+                                alert("Added to Wishlist");
+                            } catch (error) {
+                                alert("Failed to add to wishlist");
+                            }
+                        }}
+                        className="bg-[#333333] text-white px-8 py-2 rounded-[2px] font-medium text-sm flex-1 max-w-[150px] flex items-center justify-center gap-2 hover:bg-black uppercase"
+                    >
                         <Heart className="h-4 w-4" /> Wishlist
                     </button>
                 </div>

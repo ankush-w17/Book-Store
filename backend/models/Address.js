@@ -30,6 +30,11 @@ const addressSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+      type: String,
+      enum: ['Home', 'Work', 'Other'],
+      default: 'Home'
+  }
 }, {
   timestamps: true,
 });
