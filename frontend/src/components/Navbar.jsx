@@ -1,8 +1,21 @@
-import React from 'react';
-import { Search, User, ShoppingCart, BookOpen } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Search, User, ShoppingCart, BookOpen, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
 const Navbar = () => {
+  const { user, logout } = useAuth();
+  const { cartCount } = useCart();
+  const [keyword, setKeyword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    if (e.key === 'Enter') {
+        navigate(`/?keyword=${keyword}`);
+    }
+  };
+
   return (
     <nav className="bg-[#A03037] text-white px-20 py-4 sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -22,22 +35,41 @@ const Navbar = () => {
               type="text"
               placeholder="Search ..."
               className="w-full pl-10 pr-4 py-2 rounded-[4px] text-gray-900 bg-white focus:outline-none focus:ring-1 focus:ring-white transition-all shadow-sm text-sm"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              onKeyDown={handleSearch}
             />
           </div>
         </div>
 
         {/* Right Actions */}
         <div className="flex items-center gap-8 border-l border-white/20 pl-8 h-8">
-          <div className="flex flex-col items-center cursor-pointer hover:opacity-90 transition-opacity gap-0.5">
-            <User className="h-5 w-5" />
-            <span className="text-[10px] font-medium">Profile</span>
-          </div>
+           {user ? (
+             <div className="flex items-center gap-4">
+                 <div className="flex flex-col items-center">
+                    <User className="h-5 w-5" />
+                    <span className="text-[10px] font-medium">{user.name.split(' ')[0]}</span>
+                 </div>
+                 <button onClick={logout} className="flex flex-col items-center cursor-pointer hover:opacity-90 transition-opacity gap-0.5 bg-transparent border-0 p-0">
+                    <LogOut className="h-5 w-5" />
+                    <span className="text-[10px] font-medium">Logout</span>
+                 </button>
+             </div>
+           ) : (
+             <Link to="/login" className="flex flex-col items-center cursor-pointer hover:opacity-90 transition-opacity gap-0.5">
+                <User className="h-5 w-5" />
+                <span className="text-[10px] font-medium">Login</span>
+             </Link>
+           )}
+          
           <div className="flex flex-col items-center cursor-pointer hover:opacity-90 transition-opacity gap-0.5 relative">
              <div className="relaitve">
                 <ShoppingCart className="h-5 w-5" />
-                <span className="absolute -top-2 left-3 bg-white text-[#A03037] text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full">
-                    0
-                </span>
+                {cartCount > 0 && (
+                    <span className="absolute -top-2 left-3 bg-white text-[#A03037] text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full">
+                        {cartCount}
+                    </span>
+                )}
              </div>
             <span className="text-[10px] font-medium">Cart</span>
           </div>
