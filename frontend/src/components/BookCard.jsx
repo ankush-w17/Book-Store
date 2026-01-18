@@ -24,9 +24,9 @@ const BookCard = ({ book }) => {
         </div>
 
         <div className="flex items-center gap-2 mt-1">
-            <span className="font-bold text-gray-900 text-[14px]">Rs. {book.price}</span>
-            {book.originalPrice && (
-                <span className="text-[#878787] text-[11px] line-through">Rs. {book.originalPrice}</span>
+            <span className="font-bold text-gray-900 text-[14px]">Rs. {book.discountPrice > 0 ? book.discountPrice : book.price}</span>
+            {book.discountPrice > 0 && book.discountPrice < book.price && (
+                <span className="text-[#878787] text-[11px] line-through">Rs. {book.price}</span>
             )}
         </div>
       </div>
