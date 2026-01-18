@@ -15,6 +15,7 @@ const cartRoutes = require('./routes/cartRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const addressRoutes = require('./routes/addressRoutes');
+const wishlistRoutes = require('./routes/wishlistRoutes');
 
 app.use(express.json());
 app.use(cors());
@@ -25,6 +26,7 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/addresses', addressRoutes);
+app.use('/api/wishlist', wishlistRoutes);
 
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
