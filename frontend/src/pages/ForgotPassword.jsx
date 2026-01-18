@@ -8,7 +8,6 @@ const ForgotPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Requirements said "UI Only" or "Add this page". 
-    // Since backend isn't set up for email, we'll just show an alert or simulate success.
     alert(`Password reset link sent to ${email}`);
     navigate('/login');
   };

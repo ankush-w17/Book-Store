@@ -9,7 +9,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const { login, googleLogin } = useAuth();
     const navigate = useNavigate();
-    const [isSignup, setIsSignup] = useState(false); // Toggle for simple switching in this demo
+    const [isSignup, setIsSignup] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
